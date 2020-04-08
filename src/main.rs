@@ -3,8 +3,6 @@
 
 
 fn main() {
-	unsafe {
-	malloc(3);
-};
+
     println!("Hello, world!");
 }
