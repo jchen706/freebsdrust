@@ -1,5 +1,5 @@
 //#![feature(alloc_system)]
-use libc::malloc;
+//use libc::malloc;
 
 
 fn main() {
