@@ -1,10 +1,9 @@
-// For `pub use ::core::{intrinsics,raw}` statements
 #![feature(core_intrinsics)]
 #![feature(raw)]
 #![feature(optin_builtin_traits)]
-#![feature(custom_attribute, lang_items, panic_info_message)]
+#![feature(custom_attribute, lang_items, panic_info_message, alloc_error_handler, start)]
 
-
+#![cfg_attr(not(test), no_std)]
 #![allow(non_upper_case_globals)]
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
@@ -18,7 +17,6 @@ pub mod os;
 
 #[macro_use]
 pub mod macros;
-
 
 pub mod io;
 
@@ -64,3 +62,58 @@ mod std {
 
 //home/john/Documents/freebsdrust/target/debug/build/project1-ff47afed9c4bf9de/out/bindings.rs
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+
+
+
+
+//#![feature(alloc_system)]
+//use libc::malloc;
+
+
+//use std::os::raw;
+
+
+
+
+
+
+
+//#[macro_use]
+//extern crate bsd_std as bsd_lib;
+//#[macro_use]
+//extern crate bsd_std as std;
+
+
+
+extern crate alloc;
+
+//pub mod mutex;
+pub mod lang;
+pub mod allocator;
+
+use crate::allocator::FreebsdAllocator;
+
+
+#[global_allocator]
+static ALLOCATOR: FreebsdAllocator = FreebsdAllocator;
+
+#[no_mangle]
+#[start]
+fn start(_argc: isize, _argv:*const *const u8) -> isize {
+    //println!("Hello, start!");
+    //main();
+
+    0
+}
+
+// #[no_mangle]
+// #[start]
+// fn main() {
+
+//     println!("Hello, world!");
+// }
+
+#[alloc_error_handler]
+fn alloc_error_handler(layout: alloc::alloc::Layout) -> ! {
+    panic!("allocation error: {:?}", layout)
+}
