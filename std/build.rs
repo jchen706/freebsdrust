@@ -155,7 +155,7 @@ fn main() {
 	clang_args.push(String::from("-Du64=__u64"));
 	
     // Push supplied header file paths (relative to the kernel directory)
-	match std::fs::File::create(file        .opaque_type("timex") // large types with bitfields are broken; see rust-bindgen#1325
+	match std::fs::File::create(file.opaque_type("timex") // large types with bitfields are broken; see rust-bindgen#1325
 path_header.clone()) {
 		Ok(mut file) => {
 			// Generate include lines for all requested headers
