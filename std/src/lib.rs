@@ -98,8 +98,7 @@ use crate::allocator::FreebsdAllocator;
 static ALLOCATOR: FreebsdAllocator = FreebsdAllocator;
 
 #[no_mangle]
-#[start]
-fn start(_argc: isize, _argv:*const *const u8) -> isize {
+pub extern "C" fn start(_argc: isize, _argv:*const *const u8) -> isize {
     //println!("Hello, start!");
     //main();
 
