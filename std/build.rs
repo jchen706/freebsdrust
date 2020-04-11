@@ -68,22 +68,13 @@ const FILEPATH_CODE:   &'static str = "src/os/kernel.rs";
 const FILENAME_HEADER: &'static str = "kernel-include.h";
 
 /// List of headers required by linux-std itself
-const CLANG_HEADER_REQUIRED: [&'static str; 3] = [
-	//"linux/printk.h",  // For the `KernelDebugWriter` (used by the `println!()` macro)
-	//"linux/slab.h",    // For converting Rust strings to C strings at runtime
-	//"linux/hrtimer.h", //WORKAROUND: "linux/timer.h" misses an include to this file 😔
-    //#include<stdlib.h>
-    #include<stdint.h>
-    #include <sys/types.h>
-    #include <sys/module.h>
-    #include <sys/systm.h>  /* uprintf */
-    #include <sys/param.h>  /* defines used in kernel.h */
-    //#include <sys/kernel.h> /* types used in module initialization */
-    //#include <sys/conf.h>   /* cdevsw struct */
-    //#include <sys/uio.h>    /* uio struct */
-    #include <sys/malloc.h> 
-    //#include <sys/kthread.h>
-    //#include <sys/unistd.h>
+const CLANG_HEADER_REQUIRED: [&'static str; 6] = [
+    "stdint.h",
+    "sys/types.h",
+    "sys/module.h",
+    "sys/systm.h",  /* uprintf */
+    "sys/param.h" , /* defines used in kernel.h */
+    "sys/malloc.h", 
 ];
 
 /// List of parameters not ever to pass to the clang parser of rust-bindgen
