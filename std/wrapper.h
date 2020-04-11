@@ -1,4 +1,4 @@
-#include <bzlib.h>
+//#include <bzlib.h>
 //#include<stdlib.h>
 #include<stdint.h>
 #include <sys/types.h>

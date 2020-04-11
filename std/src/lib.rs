@@ -1,8 +1,8 @@
 #![feature(core_intrinsics)]
 #![feature(raw)]
 #![feature(optin_builtin_traits)]
-#![feature(custom_attribute, lang_items, panic_info_message, alloc_error_handler, start)]
-
+#![feature(custom_inner_attributes,custom_attribute, lang_items, panic_info_message, alloc_error_handler)]
+#![feature(start)]
 #![cfg_attr(not(test), no_std)]
 #![allow(non_upper_case_globals)]
 #![allow(non_camel_case_types)]
@@ -61,7 +61,7 @@ mod std {
 
 
 //home/john/Documents/freebsdrust/target/debug/build/project1-ff47afed9c4bf9de/out/bindings.rs
-include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+//include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
 
 
@@ -98,19 +98,20 @@ use crate::allocator::FreebsdAllocator;
 static ALLOCATOR: FreebsdAllocator = FreebsdAllocator;
 
 #[no_mangle]
-pub extern "C" fn start(_argc: isize, _argv:*const *const u8) -> isize {
-    //println!("Hello, start!");
+#[start]
+fn start(_argc: isize, _argv:*const *const u8) -> isize {
+    println!("Hello, start!");
     //main();
 
     0
 }
 
-// #[no_mangle]
-// #[start]
-// fn main() {
+//#[no_mangle]
+//#[start]
+//fn main() {
 
-//     println!("Hello, world!");
-// }
+ //    println!("Hello, world!");
+//}
 
 #[alloc_error_handler]
 fn alloc_error_handler(layout: alloc::alloc::Layout) -> ! {
